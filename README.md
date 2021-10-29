@@ -1,4 +1,4 @@
-# alice-bob-repo
+# RoomOrg 
 
 Starting to set up the repo for the 243 project, using gitlab and github. 
 
