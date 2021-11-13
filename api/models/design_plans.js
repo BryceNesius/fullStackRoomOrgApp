@@ -11,7 +11,7 @@ class Design_plan extends Model {
     static get relationMappings() {
         return {
             ownership: {
-                relation: Model.HasManyRelation,
+                relation: Model.ManyToManyRelation,
                 modelClass: User,
                 join: {
                     from: 'Design_plan.plan_id',
@@ -20,7 +20,7 @@ class Design_plan extends Model {
                         to: 'Ownership.plan_id'
                     },
                     to: 'User.user_id'
-                }
+                },
             }
         };
     }
