@@ -4,16 +4,21 @@ const Model = objection.Model;
 
 class Room extends Model {
     static get tableName() {
-        return 'Room';
+        return 'room';
     }
 
     static get relationMappings() {
         return {
             dorm: {
-                relation: Model.HasOneRelation,
+                relation: Model.BelongsToOneRelation,
                 modelClass: Dorm,
+                join: {
+                    from: 'Room.id',
+                    to: 'dorm_id'
+                }
             }
         };
     }
 }
-    module.exports = {Room};
+
+module.exports = {Room};
