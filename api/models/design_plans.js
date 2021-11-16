@@ -12,14 +12,14 @@ class Design_plan extends Model {
         return {
             ownership: {
                 relation: Model.ManyToManyRelation,
-                modelClass: User,
+                modelClass: require('./user'),
                 join: {
-                    from: 'Design_plan.plan_id',
+                    from: 'design_plan.plan_id',
                     through: {
-                        from: 'Ownership.user_id',
-                        to: 'Ownership.plan_id'
+                        from: 'ownership.user_id',
+                        to: 'ownership.plan_id'
                     },
-                    to: 'User.user_id'
+                    to: 'user.user_id'
                 },
             }
         };

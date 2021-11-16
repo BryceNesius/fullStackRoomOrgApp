@@ -11,9 +11,9 @@ class Room extends Model {
         return {
             dorm: {
                 relation: Model.BelongsToOneRelation,
-                modelClass: Dorm,
+                modelClass: require('./dorm'),
                 join: {
-                    from: 'Room.id',
+                    from: 'room.id',
                     to: 'dorm_id'
                 }
             }
