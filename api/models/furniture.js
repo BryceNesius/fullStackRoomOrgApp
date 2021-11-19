@@ -10,7 +10,15 @@ class furniture extends Model {
         return {
             furniture:{
                 relation: Model.ManyToManyRelation,
-
+                modelClass:require("./room_furniture"),
+                join:{
+                    from: 'furniture.furniture_id',
+                    through: {
+                        from: 'room_furniture.furniture_id',
+                        to: 'room_furniture.number'
+                    },
+                    to: 'room.number'
+                }
             }
         }//end of return
     }//end of relationMap
