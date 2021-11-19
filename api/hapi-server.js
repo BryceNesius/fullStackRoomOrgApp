@@ -5,9 +5,9 @@ const knex = require("knex")({
   client: "pg",
   connection: {
     host: "pg.cse.taylor.edu",
-    user: "bryce_nesius",
-    password: "ruquyebi",
-    database: "bryce_nesius",
+    user: "acorn",
+    password: "qijihiyo",
+    database: "acorn",
   },
 });
 
@@ -16,6 +16,16 @@ const { Model } = require("objection");
 Model.knex(knex);
 
 // Load model classes.
+const Design_Plans = require("/Users/bnesius/acorns/Monkey/api/models/design_plans");
+const Dorm = require("/Users/bnesius/acorns/Monkey/api/models/dorm");
+const Favorites = require("/Users/bnesius/acorns/Monkey/api/models/favorites");
+const Furniture = require("/Users/bnesius/acorns/Monkey/api/models/furniture");
+const Ownership = require("/Users/bnesius/acorns/Monkey/api/models/ownership");
+const Room = require("/Users/bnesius/acorns/Monkey/api/models/room");
+const Room_Furniture = require("/Users/bnesius/acorns/Monkey/api/models/furniture");
+const School = require("/Users/bnesius/acorns/Monkey/api/models/school");
+const User = require("/Users/bnesius/acorns/Monkey/api/models/user");
+const User_Friends = require("/Users/bnesius/acorns/Monkey/api/models/user_friends");
 
 
 // Configure Hapi.
@@ -42,7 +52,7 @@ const init = async () => {
       path: "/",
       handler: (request, h) => "Hello, Hapi",
     },
-      
+
   ]);
 
   console.log("Server listening on", server.info.uri);
