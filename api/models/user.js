@@ -1,6 +1,6 @@
 const {Model} = require("objection");
-const {school} = require('./school.js');
-const {design_plan} = require('./design_plan.js');
+// const {school} = require('./school');
+// const {design_plan} = require('./design_plans');
 
 // user belongs to one school
 
@@ -12,5 +12,9 @@ const {design_plan} = require('./design_plan.js');
 
 // a friend can have multiple users
 
+class User extends Model {
+}
+
+module.exports = User;
 
 

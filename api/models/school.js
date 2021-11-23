@@ -1,16 +1,16 @@
 const {Model} = require("objection");
-const {dorm} = require('./dorm.js');
 const {user} = require('./user.js');
 
 class school extends Model {
     static get tableName() {
         return 'school';
     }
+
     static get relationMappings() {
         return {
             dorms: {
                 relation: Model.HasManyRelation,
-                modelClass: dorm,
+                modelClass: require('./dorm.js'),
                 join: {
                     from: 'school_id',
                     to: 'dorm.school_id'
@@ -28,4 +28,4 @@ class school extends Model {
     } // end relationMappings
 } // end class school
 
-module.exports = { school };
+module.exports = school;

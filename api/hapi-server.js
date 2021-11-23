@@ -1,5 +1,3 @@
-// Configure Knex.
-const Joi = require("joi");
 // Change to acorns database
 const knex = require("knex")({
   client: "pg",
@@ -16,21 +14,21 @@ const { Model } = require("objection");
 Model.knex(knex);
 
 // Load model classes.
-const Design_Plans = require("/Users/bnesius/acorns/Monkey/api/models/design_plans");
-const Dorm = require("/Users/bnesius/acorns/Monkey/api/models/dorm");
-const Favorites = require("/Users/bnesius/acorns/Monkey/api/models/favorites");
-const Furniture = require("/Users/bnesius/acorns/Monkey/api/models/furniture");
-const Ownership = require("/Users/bnesius/acorns/Monkey/api/models/ownership");
-const Room = require("/Users/bnesius/acorns/Monkey/api/models/room");
-const Room_Furniture = require("/Users/bnesius/acorns/Monkey/api/models/furniture");
-const School = require("/Users/bnesius/acorns/Monkey/api/models/school");
-const User = require("/Users/bnesius/acorns/Monkey/api/models/user");
-const User_Friends = require("/Users/bnesius/acorns/Monkey/api/models/user_friends");
-
+const DesignPlans = require("./models/design_plans");
+const Dorm = require("./models/dorm");
+const Favorites = require("./models/favorites");
+const Furniture = require("./models/furniture");
+const Ownership = require("./models/ownership");
+const Room = require("./models/room");
+const RoomFurniture = require("./models/furniture");
+const School = require("./models/school");
+const User = require("./models/user");
+const UserFriends = require("./models/user_friends");
 
 // Configure Hapi.
 const Hapi = require("@hapi/hapi");
 const Boom = require("@hapi/boom");
+const Joi = require("joi");
 
 const init = async () => {
   const server = Hapi.server({
@@ -38,11 +36,16 @@ const init = async () => {
     port: 3000,
   });
 
+  // Show routes.
+  await server.register(require("blipp"));
+
   // Log stuff.
   await server.register({
     plugin: require("hapi-pino"),
     options: {
-      prettyPrint: true,
+      transport: {
+        target: "pino-pretty"
+      }
     },
   });
 
