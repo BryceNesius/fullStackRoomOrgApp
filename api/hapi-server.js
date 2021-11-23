@@ -1,5 +1,3 @@
-// Configure Knex.
-const Joi = require("joi");
 // Change to acorns database
 const knex = require("knex")({
   client: "pg",
@@ -17,10 +15,10 @@ Model.knex(knex);
 
 // Load model classes.
 
-
 // Configure Hapi.
 const Hapi = require("@hapi/hapi");
 const Boom = require("@hapi/boom");
+const Joi = require("joi");
 
 const init = async () => {
   const server = Hapi.server({
@@ -28,11 +26,16 @@ const init = async () => {
     port: 3000,
   });
 
+  // Show routes.
+  await server.register(require("blipp"));
+
   // Log stuff.
   await server.register({
     plugin: require("hapi-pino"),
     options: {
-      prettyPrint: true,
+      transport: {
+        target: "pino-pretty"
+      }
     },
   });
 

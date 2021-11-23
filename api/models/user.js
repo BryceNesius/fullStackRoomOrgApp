@@ -1,6 +1,6 @@
 const {Model} = require("objection");
-const {school} = require('./school.js');
-const {design_plan} = require('./design_plan.js');
+const {school} = require('./school');
+const {design_plan} = require('./design_plans');
 
 // user belongs to one school
 
