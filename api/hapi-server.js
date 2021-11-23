@@ -14,6 +14,7 @@ const { Model } = require("objection");
 Model.knex(knex);
 
 // Load model classes.
+const User = require('./models/user');
 
 // Configure Hapi.
 const Hapi = require("@hapi/hapi");

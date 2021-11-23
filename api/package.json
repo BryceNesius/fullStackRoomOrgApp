@@ -13,7 +13,8 @@
     "joi": "^17.4.2",
     "knex": "^0.95.14",
     "objection": "^3.0.0",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "pino-pretty": "^7.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
