@@ -1,102 +1,195 @@
 {
-    "openapi":"3.0.2",
-    "info": {
-        "title":"Acorn",
-        "version":"1.0",
-        "description": "API for ACORN COS 243 project"
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Acorn",
+    "version": "1.0",
+    "description": "API for ACORN COS 243 project"
+  },
+  "tags": [
+    {
+      "name": "user",
+      "description": "Acorn users"
     },
-    "tags": [
-        {
-          "name": "user",
-          "description": "Acorn users"
-          
+    {
+      "name": "DesignPlan",
+      "description": "This is a room design"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Error": {
+        "description": "Generic error message",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
         },
-        {
-          "name":"DesignPlan",
-          "description":"This is a room design"
+        "example": {
+          "message": "Something strange happened."
         }
-      ],
-      "components": {
-        "schemas": {
-          "Error": {
-            "description": "Generic error message",
-            "type": "object",
-            "properties": {
-              "message": { "type": "string" }
-            },
-            "example": {
-              "message": "Something strange happened."
-            }
+      },
+      "User": {
+        "description": "User of Acorn",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
           },
-          "User": {
-            "description": "User of Acorn",
-            "type": "object",
-            "properties": {
-              "id": { "type": "integer" },
-              "full_name": { "type": "string" },
-              "username": { "type": "string" },
-              "email": { "type": "string" },
-              "password": { "type": "string" },
-              "role": { "type": "boolean"},
-              "school_id": { "type": "integer" }
-                },
-                "example":{
-                  "id":52,
-                  "full_name":"Isaac Wickham",
-                  "username":"iwickham",
-                  "email":"Isaac_Wickham@example.com",
-                  "password":"P@ssword2",
-                  "role":"flase",
-                  "school_id": 2
-                }
-            },
-            "DesignPlan":{
-              "description":"User plans",
-              "type":"object",
-              "properties":{
-                "plan_id":{"type":"integer"},
-                "description": {"type":"string"},
-                "last_edited":{"type":"string"},
-                "stars":{"type":"integer"},
-                "comments":{"type":"string"}
-              },
-              "example":{
-                "plan_id":1,
-                "description": "This is a room design",
-                "last_edited":"2000-12-25",
-                "stars":5,
-                "comments":"I love this design!"
-              }
-            }
+          "full_name": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "boolean"
+          },
+          "school_id": {
+            "type": "integer"
+          }
+        },
+        "example": {
+          "id": 52,
+          "full_name": "Isaac Wickham",
+          "username": "iwickham",
+          "email": "Isaac_Wickham@example.com",
+          "password": "P@ssword2",
+          "role": "flase",
+          "school_id": 2
         }
-    },
-    "paths": {
-      "/users": {
-        "summary": "Operations on users",
-        "get": {
-          "summary": "Get all users",
-          "tags": ["user"],
-          "responses": {
-            "200": {
-              "description": "All users fetched successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/User"
-                    }
+      },
+      "DesignPlan": {
+        "description": "User plans",
+        "type": "object",
+        "properties": {
+          "plan_id": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          },
+          "last_edited": {
+            "type": "string"
+          },
+          "stars": {
+            "type": "integer"
+          },
+          "comments": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "plan_id": 1,
+          "description": "This is a room design",
+          "last_edited": "2000-12-25",
+          "stars": 5,
+          "comments": "I love this design!"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/users": {
+      "summary": "Operations on users",
+      "get": {
+        "summary": "Get all users",
+        "tags": [
+          "user"
+        ],
+        "responses": {
+          "200": {
+            "description": "All users fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
                   }
                 }
               }
             }
           }
+        }
+      },
+      "post": {
+        "summary": "Create a new user",
+        "tags": [
+          "user"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
         },
-        "post": {
-          "summary": "Create a new user",
-          "tags": ["user"],
-          "requestBody": {
+        "responses": {
+          "201": {
+            "description": "Created sucessfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "integer"
+                    }
+                  },
+                  "example": {
+                    "userId": 42
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Not created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Duplicate email address"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "summary": "Operations on a single user",
+      "get": {
+        "summary": "Get user by ID",
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
             "required": true,
+            "description": "ID of user to fetch",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved",
             "content": {
               "application/json": {
                 "schema": {
@@ -105,34 +198,68 @@
               }
             }
           },
-          "responses": {
-            "201": {
-              "description": "Created sucessfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "userId": {
-                        "type": "integer"
-                      }
-                    },
-                    "example": {
-                      "userId": 42
-                    }
-                  }
-                }
-              }
+          "400": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a User",
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "schema": {
+              "type": "integer"
             },
-            "400": {
-              "description": "Not created",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Error"
-                  },
-                  "example": {
-                    "message": "Duplicate email address"
+            "required": true,
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted"
+          },
+          "400": {
+            "description": "Can't delete user"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update user info",
+        "tags": [
+          "user"
+        ],
+        "description": "Ask nurk about what we should be updating (How)",
+        "responses": {
+          "200": {
+            "description": "User updated"
+          },
+          "400": {
+            "description": "Can't update user"
+          }
+        }
+      }
+    },
+  
+  "/DesignPlan": {
+      "summary": "Operations on design plans",
+      "get": {
+        "summary": "Get all design plans",
+        "tags": [
+          "DesignPlan"
+        ],
+        "responses": {
+          "200": {
+            "description": "All design plans fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DesignPlan"
                   }
                 }
               }
@@ -140,100 +267,77 @@
           }
         }
       },
-      "/users/{id}": {
-        "summary": "Operations on a single user",
-        "get": {
-          "summary": "Get user by ID",
-          "tags": ["user"],
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "description": "ID of user to fetch",
+      "post": {
+        "summary": "Create a new Design",
+        "tags": [
+          "DesignPlan"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
               "schema": {
-                "type": "integer"
+                "$ref": "#/components/schemas/DesignPlan"
               }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/User"
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created sucessfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "design_id": {
+                      "type": "integer"
+                    }
+                  },
+                  "example": {
+                    "Design_id": 42
                   }
                 }
               }
-            },
-            "400": {
-              "description": "User not found"
+            }
+          },
+          "400": {
+            "description": "Not created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DesignPlan"
+                },
+                "example": {
+                  "message": "Duplicate email address"
+                }
+              }
             }
           }
-        },
-        "delete": {
-          "summary": "Delete a User",
-          "tags": ["user"],
-          "parameters": [
-            {
-              "name": "id",
-              "schema": { "type": "integer" },
-              "required": true
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "User deleted"
-            },
-            "400": {
-              "description": "Can't delete user"
-            }
-          }
-        },
-        "patch":{
-          "summary": "Update user info",
-          "tags": ["user"],
-          "description":"Ask nurk about what we should be updating (How)"
         }
       }
     },
-
-
-
-
-
-
-
-
-
-
-      "/DesignPlan": {
-        "summary": "Operations on design plans",
-        "get": {
-          "summary": "Get all design plans",
-          "tags": ["DesignPlan"],
-          "responses": {
-            "200": {
-              "description": "All design plans fetched successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/DesignPlan"
-                    }
-                  }
-                }
-              }
+    "/DesignPlan/{id}": {
+      "summary": "Operations on a single user",
+      "get": {
+        "summary": "Get user by ID",
+        "tags": [
+          "DesignPlan"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of user to fetch",
+            "schema": {
+              "type": "integer"
             }
           }
-        },
-        "post": {
-          "summary": "Create a new Design",
-          "tags": ["DesignPlan"],
-          "requestBody": {
-            "required": true,
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved",
             "content": {
               "application/json": {
                 "schema": {
@@ -242,93 +346,35 @@
               }
             }
           },
-          "responses": {
-            "201": {
-              "description": "Created sucessfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "design_id": {
-                        "type": "integer"
-                      }
-                    },
-                    "example": {
-                      "Design_id": 42
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Not created",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/DesignPlan"
-                  },
-                  "example": {
-                    "message": "Duplicate email address"
-                  }
-                }
-              }
-            }
+          "400": {
+            "description": "User not found"
           }
         }
       },
-      "/DesignPlan/{id}": {
-        "summary": "Operations on a single user",
-        "get": {
-          "summary": "Get user by ID",
-          "tags": ["DesignPlan"],
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "description": "ID of user to fetch",
-              "schema": {
-                "type": "integer"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/DesignPlan"
-                  }
-                }
-              }
+      "delete": {
+        "summary": "Delete a design plan",
+        "tags": [
+          "DesignPlan"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "schema": {
+              "type": "integer"
             },
-            "400": {
-              "description": "User not found"
-            }
+            "required": true,
+            "in": "path"
           }
-        },
-        "delete": {
-          "summary": "Delete a design plan",
-          "tags": ["DesignPlan"],
-          "parameters": [
-            {
-              "name": "id",
-              "schema": { "type": "integer" },
-              "required": true
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "design deleted"
-            },
-            "400": {
-              "description": "Can't delete user"
-            }
+        ],
+        "responses": {
+          "200": {
+            "description": "design deleted"
+          },
+          "400": {
+            "description": "Can't delete user"
           }
         }
       }
-    
+    }
+  }
 }
-
