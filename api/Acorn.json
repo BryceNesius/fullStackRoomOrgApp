@@ -13,6 +13,26 @@
     {
       "name": "DesignPlan",
       "description": "This is a room design"
+    },
+    {
+      "name": "furniture",
+      "description": "This is a furniture object"
+    },
+    {
+      "name": "room",
+      "description": "Room info"
+    },
+    {
+      "name": "school",
+      "description": "school info"
+    },
+    {
+      "name": "dorm",
+      "description": "dorm info"
+    },
+    {
+      "name": "room_furniture",
+      "description": "furniture in a room"
     }
   ],
   "components": {
@@ -91,6 +111,111 @@
           "last_edited": "2000-12-25",
           "stars": 5,
           "comments": "I love this design!"
+        }
+      },
+      "furniture": {
+        "description": "room furniture",
+        "type": "object",
+        "properties": {
+          "furniture_id":{
+            "type": "integer"
+          },
+          "name":{
+            "type":"string"
+          },
+          "length":{
+            "type":"integer"
+          },
+          "width":{
+            "type":"integer"
+          },
+          "height":{
+            "type":"integer"
+          },
+          "lat_long":{
+            "type":"integer"
+          },
+          "required":{
+            "type":"boolean"
+          }
+        }
+      },
+      "room":{
+        "description": "room information",
+        "type": "object",
+        "properties": {
+          "number":{
+            "type": "integer"
+          },
+          "floor":{
+            "type": "integer"
+          },
+          "length":{
+            "type": "integer"
+          },
+          "width":{
+            "type": "integer"
+          },
+          "height":{
+            "type": "integer"
+          },
+          "occupancy":{
+            "type": "integer"
+          },
+          "dorm_id":{
+            "type": "integer"
+          }
+        }
+      },
+      "school":{
+        "description": "school information",
+        "type": "object",
+        "properties": {
+          "school_id":{
+            "type": "integer"
+          },
+          "name":{
+            "type": "string"
+          }
+        }
+      },
+      "dorm":{
+        "description": "dorm information",
+        "type": "object",
+        "properties": {
+          "dorm_id":{
+            "type": "integer"
+          },
+          "name":{
+            "type": "string"
+          },
+          "safety":{
+            "type": "string"
+          },
+          "mail_address":{
+            "type": "string"
+          },
+          "school_id":{
+            "type": "integer"
+          }
+        }
+      },
+      "room_furniture":{
+        "description": "list of furniture in a room",
+        "type": "object",
+        "properties": {
+          "furniture_id":{
+            "type": "integer"
+          },
+          "room_number":{
+            "type": "integer"
+          },
+          "dorm_id":{
+            "type": "integer"
+          },
+          "number_of_items":{
+            "type": "integer"
+          }
         }
       }
     }
@@ -372,6 +497,266 @@
           },
           "400": {
             "description": "Can't delete user"
+          }
+        }
+      }
+    },
+    "/furniture":{
+      "summary": "Operations on furniture",
+      "get": {
+        "summary": "Get all furniture",
+        "tags": [
+          "furniture"
+        ],
+        "responses": {
+          "200": {
+            "description": "All furniture fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/furniture"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/furniture/{id}":{
+      "summary": "Operations on furniture",
+      "get": {
+        "summary": "Get furniture by ID",
+        "tags": [
+          "furniture"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of furniture to fetch",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/furniture"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Furniture not found"
+          }
+        }
+      }
+    },
+    "/rooms":{
+      "summary": "Operations on rooms",
+      "get": {
+        "summary": "Get all rooms",
+        "tags": [
+          "room"
+        ],
+        "responses": {
+          "200": {
+            "description": "All rooms fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/room"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/room/{id}":{
+      "summary": "Operations on rooms",
+      "get": {
+        "summary": "Get room by ID",
+        "tags": [
+          "room"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of room to fetch",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/room"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Room not found"
+          }
+        }
+      }
+    },
+    "/school":{
+      "summary": "Operations on schools",
+      "get": {
+        "summary": "Get all schools",
+        "tags": [
+          "school"
+        ],
+        "responses": {
+          "200": {
+            "description": "All schools fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/school"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/school/{id}":{
+      "summary": "Operations on a school",
+      "get": {
+        "summary": "Get school by ID",
+        "tags": [
+          "school"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of school to fetch",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/school"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "School not found"
+          }
+        }
+      }
+    },
+    "/dorms":{
+      "summary": "Operations on dorms",
+      "get": {
+        "summary": "Get all dorms",
+        "tags": [
+          "dorm"
+        ],
+        "responses": {
+          "200": {
+            "description": "All dorms fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/dorm"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dorm/{id}":{
+      "summary": "Operations on a dorm",
+      "get": {
+        "summary": "Get dorm by ID",
+        "tags": [
+          "dorm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of dorm to fetch",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/dorm"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dorm not found"
+          }
+        }
+      }
+    },
+    "/room_furniture":{
+      "summary": "Furniture in a room",
+      "get": {
+        "summary": "Get all furniture in a room",
+        "tags": [
+          "room_furniture"
+        ],
+        "responses": {
+          "200": {
+            "description": "All room furniture fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/room_furniture"
+                  }
+                }
+              }
+            }
           }
         }
       }
