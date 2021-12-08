@@ -17,7 +17,7 @@
     <v-btn text v-bind:to="{ name: 'reset-password' }">
       Reset Password
     </v-btn>
-    <v-btn text v-bind:to="{ name: 'about-us' }">About Us</v-btn>
+    <v-btn text v-bind:to="{ name: 'feed' }">My Feed</v-btn>
 
     <v-menu v-if="isLoggedIn" offset-y>
       <template v-slot:activator="{ on }">
