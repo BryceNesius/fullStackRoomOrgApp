@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Monkey.iml" filepath="$PROJECT_DIR$/.idea/Monkey.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ui-spa.iml" filepath="$PROJECT_DIR$/.idea/ui-spa.iml" />
     </modules>
   </component>
 </project>
