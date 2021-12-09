@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app dark color="primary">
+  <v-app-bar app bottom dark color="primary">
     <router-link v-bind:to="{ name: 'home-page' }">
       <v-toolbar-title class="white--text">
         Single Page App
