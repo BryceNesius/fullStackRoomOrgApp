@@ -15,6 +15,16 @@ objection.Model.knex(knex);
 
 // Models
 const Account = require("./models/Account");
+const DesignPlans = require("./models/design_plans");
+const Dorm = require("./models/dorm");
+const Favorites = require("./models/favorites");
+const Furniture = require("./models/furniture");
+const Ownership = require("./models/ownership");
+const Room = require("./models/room");
+const RoomFurniture = require("./models/furniture");
+const School = require("./models/school");
+const User = require("./models/user");
+const UserFriends = require("./models/user_friends");
 
 // Hapi
 const Joi = require("@hapi/joi"); // Input validation

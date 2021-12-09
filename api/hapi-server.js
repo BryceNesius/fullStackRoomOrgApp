@@ -56,6 +56,14 @@ const init = async () => {
       handler: (request, h) => "Hello, Hapi",
     },
 
+    {
+      method: "GET",
+      path: "/users",
+      handler: (request, h) => {
+        return User.query();
+      }
+    },
+
   ]);
 
   console.log("Server listening on", server.info.uri);
