@@ -1,8 +1,7 @@
-//
-objection = require('objection');
-const Model = objection.Model;
 
-class furniture extends Model {
+const { Model } = require("objection");
+
+class Furniture extends Model {
     static get tableName(){
         return 'furniture';
     }
@@ -10,7 +9,7 @@ class furniture extends Model {
         return {
             furniture:{
                 relation: Model.ManyToManyRelation,
-                modelClass:require("./room_furniture"),
+                modelClass: require("./room_furniture"),
                 join:{
                     from: 'furniture.furniture_id',
                     through: {
@@ -23,4 +22,4 @@ class furniture extends Model {
         }//end of return
     }//end of relationMap
 }//End of class
-module.exports = { furniture };
+module.exports = { Furniture };

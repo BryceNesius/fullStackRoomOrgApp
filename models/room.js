@@ -1,4 +1,3 @@
-const pg = require('pg');
 const objection = require('objection');
 const Model = objection.Model;
 

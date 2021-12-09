@@ -3,7 +3,7 @@ const {school} = require('./school.js');
 const {room_furniture} = require('./room_furniture.js');
 
 
-class dorm extends Model {
+class Dorm extends Model {
     static get tableName() {
         return 'dorm';
     }
@@ -30,4 +30,4 @@ class dorm extends Model {
     } // end relationMappings
 } // end class dorm
 
-module.exports = { dorm };
+module.exports = { Dorm };
