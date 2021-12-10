@@ -3,9 +3,9 @@ const knex = require("knex")({
   client: "pg",
   connection: {
     host: "pg.cse.taylor.edu", // PostgreSQL server
-    user: "kayla_rehwoldt", // Your user name
-    password: "zatuyama", // Your password
-    database: "kayla_rehwoldt", // Your database name
+    user: "acorn", // Your user name
+    password: "qijihiyo", // Your password
+    database: "acorn", // Your database name
   },
 });
 
@@ -15,10 +15,17 @@ objection.Model.knex(knex);
 
 // Models
 const Account = require("./models/Account");
+const School = require("./models/school");
+const Dorm = require("./models/dorm");
+const Design_Plans = require("./models/design_plans");
+const Furniture = require("./models/furniture");
+const Room = require("./models/room");
+
 
 // Hapi
 const Joi = require("@hapi/joi"); // Input validation
-const Hapi = require("@hapi/hapi"); // Server
+const Hapi = require("@hapi/hapi");
+
 
 const server = Hapi.server({
   host: "localhost",
@@ -42,6 +49,13 @@ async function init() {
 
   // Configure routes.
   server.route([
+
+    {
+      method:"GET",
+      path: "/",
+      handler: (request, h) => "Well, hello there!"
+    },
+
     {
       method: "POST",
       path: "/accounts",
@@ -97,6 +111,17 @@ async function init() {
       handler: (request, h) => {
         return Account.query();
       },
+    },
+
+    {
+      method: "GET",
+      path: "/schools",
+      config: {
+        description: "Retrieve all the schools and their id's",
+      },
+      handler: (request, h) => {
+        return School.query();
+      }
     },
 
     {

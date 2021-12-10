@@ -16,18 +16,20 @@
       >
       </v-text-field>
 
-      <v-text-field
-          label="What school is this plan for?"
-          v-model="newDesign.school"
+      <v-select
+      v-bind:items="schools"
+      label="School"
+      v-on:select="getDorms"
+      required
+      >
+      </v-select>
+
+      <v-select
+          v-bind:items="dorms"
+          label="Dorm"
           required
       >
-      </v-text-field>
-      <v-text-field
-          label="What dorm is this plan for?"
-          v-model="newDesign.dorm"
-          required
-      >
-      </v-text-field>
+      </v-select>
 
       <v-btn v-bind:disabled="!valid" v-on:click="handleSubmit"
       >Create Plan
@@ -44,6 +46,12 @@ export default {
 
   data: function () {
     return {
+      mounted: function () {
+        this.$nextTick(function () {
+          this.getSchools();
+        })
+      },
+
       valid: false,
 
       newDesign: {
@@ -51,9 +59,14 @@ export default {
         description: "",
         school: "",
         dorm: ""
-
-
       },
+
+      selectedSchool: null,
+      selectedDorm: null,
+      schools: [],
+      dorms: [],
+
+
       rules: {
         required: [(val) => val.length > 0 || "Required"],
         name: [(val) => /[a-z]/.test(val) || "Need lower case letter"],
@@ -72,6 +85,17 @@ export default {
         description: this.newDesign.description,
         school: this.newDesign.school,
         dorm: this.newDesign.dorm
+      })
+    },
+
+    getSchools: function () {
+      this.$axios.get("/schools").then(response => {
+        this.schools = response.data;
+      })
+    },
+    getDorms: function () {
+      this.$axios.get("/dorms").then(response => {
+        this.dorms = response.data;
       })
     }
   }
