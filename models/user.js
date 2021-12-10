@@ -34,8 +34,12 @@ class User extends Model {
                 relation: Model.ManyToManyRelation,
                 modelClass: require("./user_friends"),
                 join: {
-                    from: "user.user_id"
-
+                    from: "user.user_id",
+                    through: {
+                        from: "user_friends.user_id",
+                        to: "user_friends.friend_id"
+                    },
+                    to: "user.user_id"
                 }
             },
             school: {
