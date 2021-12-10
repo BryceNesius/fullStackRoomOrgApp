@@ -7,6 +7,8 @@ import SignUp from "./pages/SignUp.vue";
 import feed from "./pages/feed.vue";
 import Accounts from "./pages/Accounts.vue";
 import ResetPassword from "./pages/ResetPassword.vue";
+import CreateDesign from "./pages/CreateDesign";
+
 
 Vue.use(Router);
 
@@ -19,6 +21,7 @@ export default new Router({
     { name: "sign-in", path: "/sign-in", component: SignIn },
     { name: "feed", path: "/feed", component: feed },
     { name: "accounts", path: "/accounts", component: Accounts },
-    { name: "reset-password", path: "/reset-password", component: ResetPassword}
+    { name: "reset-password", path: "/reset-password", component: ResetPassword},
+    { name: "create-design", path: "/create-design", component: CreateDesign}
   ]
 });

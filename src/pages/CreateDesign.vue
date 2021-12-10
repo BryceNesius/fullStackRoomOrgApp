@@ -5,26 +5,26 @@
     <v-form v-model="valid">
       <v-text-field
         label="Plan Name"
-        v-model="createDesign.name"
+        v-model="newDesign.name"
         required
       >
       </v-text-field>
 
       <v-text-field
           label="Plan Description"
-          v-model="createDesign.description"
+          v-model="newDesign.description"
       >
       </v-text-field>
 
       <v-text-field
           label="What school is this plan for?"
-          v-model="createDesign.school"
+          v-model="newDesign.school"
           required
       >
       </v-text-field>
       <v-text-field
           label="What dorm is this plan for?"
-          v-model="createDesign.dorm"
+          v-model="newDesign.dorm"
           required
       >
       </v-text-field>
@@ -46,7 +46,7 @@ export default {
     return {
       valid: false,
 
-      createDesign: {
+      newDesign: {
         name: "",
         description: "",
         school: "",
@@ -60,6 +60,19 @@ export default {
         school: [(val) => /[a-z]/.test(val) || "Need lower case letter"],
         dorm: [(val) => /[a-z]/.test(val) || "Need lower case letter"]
       }
+    }
+  },
+  methods: {
+    handleSubmit: function () {
+      this.planCreated = false;
+
+      this.$axios
+      .post("/create-design", {
+        name: this.newDesign.name,
+        description: this.newDesign.description,
+        school: this.newDesign.school,
+        dorm: this.newDesign.dorm
+      })
     }
   }
 }
