@@ -1,9 +1,12 @@
 <template>
   <v-container>
     <div>
-      <h4 class="display-1">Welcome, Single-Page App User</h4>
+      <h4 class="display-1">Welcome to Acorns!</h4>
 
-      <p class="body-1">This is our award-winning home page.</p>
+      <p class="body-1">Acorns is a service that allows you to design and upload room designs to plan for college or just to share with friends!</p>
     </div>
+    <img src="../media/room1.jpeg" style="height: 500px; width: 500px" alt="Taylor University Example Room">
+    <img src="../media/room2.jpeg" style="height: 500px; width: 500px" alt="Taylor University Example Room">
+
   </v-container>
 </template>
