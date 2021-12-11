@@ -19,6 +19,10 @@
       My Feed
     </v-btn>
 
+    <v-btn v-if="isLoggedIn" text v-bind:to="{ name: 'create-design' }">
+      Create Design
+    </v-btn>
+
 
     <v-menu v-if="isLoggedIn" offset-y>
       <template v-slot:activator="{ on }">

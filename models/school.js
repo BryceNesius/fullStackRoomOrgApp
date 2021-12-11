@@ -2,7 +2,7 @@ const {Model} = require("objection");
 const {dorm} = require('./dorm.js');
 const {user} = require('./user.js');
 
-class school extends Model {
+class School extends Model {
     static get tableName() {
         return 'school';
     }
@@ -28,4 +28,4 @@ class school extends Model {
     } // end relationMappings
 } // end class school
 
-module.exports = { school };
+module.exports = { School };
