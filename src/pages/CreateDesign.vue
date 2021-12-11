@@ -96,7 +96,7 @@ export default {
       })
     },
     getDorms: function () {
-      this.$axios.get("/dorms")
+      this.$axios.get("/dorms", { params: { school_id: this.selectedSchool } })
           .then(response => {
         this.dorms = response.data;
       })
