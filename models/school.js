@@ -28,4 +28,4 @@ class School extends Model {
     } // end relationMappings
 } // end class school
 
-module.exports = { School };
+module.exports =  School;

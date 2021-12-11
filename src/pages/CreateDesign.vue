@@ -22,6 +22,7 @@
       v-model="selectedSchool"
       v-on:select="getDorms"
       required
+      v-for="school.name in schools"
       >
       </v-select>
 
