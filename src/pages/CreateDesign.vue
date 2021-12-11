@@ -19,6 +19,7 @@
       <v-select
       v-bind:items="schools"
       label="School"
+      v-model="selectedSchool"
       v-on:select="getDorms"
       required
       >
@@ -27,6 +28,7 @@
       <v-select
           v-bind:items="dorms"
           label="Dorm"
+          v-model="selectedDorm"
           required
       >
       </v-select>
@@ -94,7 +96,8 @@ export default {
       })
     },
     getDorms: function () {
-      this.$axios.get("/dorms").then(response => {
+      this.$axios.get("/dorms")
+          .then(response => {
         this.dorms = response.data;
       })
     }
