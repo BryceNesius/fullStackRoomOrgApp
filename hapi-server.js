@@ -123,6 +123,30 @@ async function init() {
         return School.query();
       }
     },
+    {
+      method: "GET",
+      path: "/school/{id}",
+      config: {
+        description: "Retrieve the ID of a particular school",
+      },
+      handler: (request, h) => {
+        return School.query()
+            .select("school_id")
+            .where("name", request.params.id)
+            .then(value => {return value;});
+      }
+    },
+
+    {
+      method: "GET",
+      path: "/dorms/{id}",
+      config: {
+        description: "Retrieve all dorms within a particular school"
+      },
+      handler: (request, h) => {
+        return Dorm.query().where("school_id", request.params.id)
+      }
+    },
 
     {
       method: "DELETE",

@@ -1,3 +1,4 @@
+
 <template>
   <v-container>
 
@@ -17,17 +18,20 @@
       </v-text-field>
 
       <v-select
-      v-bind:items="schools"
+      :items="schools"
+      item-text="name"
       label="School"
+      item-id="school_id"
       v-model="selectedSchool"
-      v-on:select="getDorms"
+      :value="schools.school_id"
+      @input="getStuff"
       required
-      v-for="school.name in schools"
       >
       </v-select>
 
       <v-select
-          v-bind:items="dorms"
+          :items="dorms"
+          item-text="name"
           label="Dorm"
           v-model="selectedDorm"
           required
@@ -44,16 +48,15 @@
 </template>
 
 <script>
+
+
 export default {
   name: "CreateDesign",
 
   data: function () {
+
     return {
-      mounted: function () {
-        this.$nextTick(function () {
-          this.getSchools();
-        })
-      },
+
 
       valid: false,
 
@@ -68,6 +71,7 @@ export default {
       selectedDorm: null,
       schools: [],
       dorms: [],
+      schoolID: null,
 
 
       rules: {
@@ -77,6 +81,12 @@ export default {
         dorm: [(val) => /[a-z]/.test(val) || "Need lower case letter"]
       }
     }
+  },
+  mounted() {
+    this.$nextTick(function () {
+      this.getSchools();
+
+    })
   },
   methods: {
     handleSubmit: function () {
@@ -91,17 +101,29 @@ export default {
       })
     },
 
-    getSchools: function () {
-      this.$axios.get("/schools").then(response => {
-        this.schools = response.data;
+    getSchools: async function () {
+      this.$axios.get("/schools")
+          .then(response => {
+          this.schools = response.data;
+          console.log(response.data);
+
       })
+          .catch((err) => this.showDialog("Error", err));
     },
     getDorms: function () {
-      this.$axios.get("/dorms", { params: { school_id: this.selectedSchool } })
+      this.$axios.get("/dorms", { params: { school_id: this.schoolID } })
           .then(response => {
         this.dorms = response.data;
       })
-    }
+    },
+    getStuff: function () {
+      this.$axios.get("/school", {params: {id: this.selectedSchool}})
+          .then(response => {
+            this.schoolID = response.data.school_id;
+            this.getDorms();
+          })
+    },
+
   }
 }
 
