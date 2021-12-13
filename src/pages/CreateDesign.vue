@@ -103,14 +103,6 @@ export default {
         });
     },
 
-    getStuff: function () {
-      this.$axios
-        .get("/schools", { params: { id: this.selectedSchool } })
-        .then((response) => {
-          this.schoolID = response.data.school_id;
-          this.getDorms();
-        });
-    },
   },
 };
 </script>
