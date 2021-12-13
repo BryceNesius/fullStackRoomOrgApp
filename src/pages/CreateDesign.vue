@@ -76,12 +76,11 @@ export default {
     handleSubmit: function () {
       this.planCreated = false;
 
-      this.$axios.post("/create-design", {
+      this.$axios.post("/design-plan", {
         first_name: this.$store.state.currentAccount.firstName,
         last_name: this.$store.state.currentAccount.lastName,
         name: this.newDesign.name,
         description: this.newDesign.description,
-        school: this.newDesign.selectedSchool,
         dorm: this.newDesign.selectedDorm,
       });
     },

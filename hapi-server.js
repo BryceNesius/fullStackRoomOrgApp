@@ -145,9 +145,9 @@ async function init() {
 
     {
       method: "POST",
-      path: "/create-design",
+      path: "/design-plan",
       config: {
-        description: "Insert a new row with a new design plan."
+        description: "Insert a new design plan."
       },
       handler: (request, h) => {
 
