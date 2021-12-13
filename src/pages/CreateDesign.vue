@@ -1,134 +1,115 @@
-
 <template>
   <v-container>
-
-  <h4>Create a new design</h4>
+    <h4>Create a new design</h4>
     <v-form v-model="valid">
       <v-text-field
         label="Plan Name"
         v-model="newDesign.name"
-        required
-      >
-      </v-text-field>
+        :rules="rules.required"
+      />
 
       <v-text-field
-          label="Plan Description"
-          v-model="newDesign.description"
-      >
-      </v-text-field>
+        label="Plan Description"
+        v-model="newDesign.description"
+        :rules="rules.required"
+      />
 
       <v-select
-      :items="schools"
-      item-text="name"
-      label="School"
-      item-id="school_id"
-      v-model="selectedSchool"
-      :value="schools.school_id"
-      @input="getStuff"
-      required
-      >
-      </v-select>
+        :items="schools"
+        item-text="name"
+        item-value="school_id"
+        label="School"
+        v-model="newDesign.selectedSchool"
+        @change="getDorms()"
+        :rules="rules.selected"
+      />
 
       <v-select
-          :items="dorms"
-          item-text="name"
-          label="Dorm"
-          v-model="selectedDorm"
-          required
-      >
-      </v-select>
+        :disabled="newDesign.selectedSchool < 0"
+        :items="dorms"
+        item-text="name"
+        item-value="dorm_id"
+        label="Dorm"
+        v-model="newDesign.selectedDorm"
+        :rules="rules.selected"
+      />
 
       <v-btn v-bind:disabled="!valid" v-on:click="handleSubmit"
-      >Create Plan
+        >Create Plan
       </v-btn>
-
     </v-form>
-
   </v-container>
 </template>
 
 <script>
-
-
 export default {
   name: "CreateDesign",
 
   data: function () {
-
     return {
-
-
       valid: false,
 
       newDesign: {
         name: "",
         description: "",
-        school: "",
-        dorm: ""
+        selectedSchool: -1,
+        selectedDorm: -1,
       },
 
-      selectedSchool: null,
-      selectedDorm: null,
       schools: [],
       dorms: [],
-      schoolID: null,
-
 
       rules: {
         required: [(val) => val.length > 0 || "Required"],
-        name: [(val) => /[a-z]/.test(val) || "Need lower case letter"],
-        school: [(val) => /[a-z]/.test(val) || "Need lower case letter"],
-        dorm: [(val) => /[a-z]/.test(val) || "Need lower case letter"]
-      }
-    }
+        selected: [(val) => val >= 0 || "Required"],
+      },
+    };
   },
-  mounted() {
-    this.$nextTick(function () {
-      this.getSchools();
 
-    })
+  mounted() {
+    this.getSchools();
   },
+
   methods: {
     handleSubmit: function () {
       this.planCreated = false;
 
-      this.$axios
-      .post("/create-design", {
+      this.$axios.post("/create-design", {
         name: this.newDesign.name,
         description: this.newDesign.description,
         school: this.newDesign.school,
-        dorm: this.newDesign.dorm
-      })
+        dorm: this.newDesign.dorm,
+      });
     },
 
-    getSchools: async function () {
-      this.$axios.get("/schools")
-          .then(response => {
+    getSchools: function () {
+      this.$axios
+        .get("/schools")
+        .then((response) => {
           this.schools = response.data;
           console.log(response.data);
-
-      })
-          .catch((err) => this.showDialog("Error", err));
+        })
+        .catch((err) => this.showDialog("Error", err));
     },
+
     getDorms: function () {
-      this.$axios.get("/dorms", { params: { school_id: this.schoolID } })
-          .then(response => {
-        this.dorms = response.data;
-      })
+      this.$axios
+        .get(`/schools/${this.newDesign.selectedSchool}/dorms`)
+        .then((response) => {
+          this.dorms = response.data;
+        });
     },
+
     getStuff: function () {
-      this.$axios.get("/school", {params: {id: this.selectedSchool}})
-          .then(response => {
-            this.schoolID = response.data.school_id;
-            this.getDorms();
-          })
+      this.$axios
+        .get("/schools", { params: { id: this.selectedSchool } })
+        .then((response) => {
+          this.schoolID = response.data.school_id;
+          this.getDorms();
+        });
     },
-
-  }
-}
-
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

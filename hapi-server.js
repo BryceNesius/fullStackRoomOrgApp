@@ -21,11 +21,9 @@ const Design_Plans = require("./models/design_plans");
 const Furniture = require("./models/furniture");
 const Room = require("./models/room");
 
-
 // Hapi
 const Joi = require("@hapi/joi"); // Input validation
 const Hapi = require("@hapi/hapi");
-
 
 const server = Hapi.server({
   host: "localhost",
@@ -49,11 +47,10 @@ async function init() {
 
   // Configure routes.
   server.route([
-
     {
-      method:"GET",
+      method: "GET",
       path: "/",
-      handler: (request, h) => "Well, hello there!"
+      handler: (request, h) => "Well, hello there!",
     },
 
     {
@@ -119,33 +116,31 @@ async function init() {
       config: {
         description: "Retrieve all the schools and their id's",
       },
-      handler: (request, h) => {
+      handler: () => {
         return School.query();
-      }
-    },
-    {
-      method: "GET",
-      path: "/school/{id}",
-      config: {
-        description: "Retrieve the ID of a particular school",
       },
-      handler: (request, h) => {
-        return School.query()
-            .select("school_id")
-            .where("name", request.params.id)
-            .then(value => {return value;});
-      }
     },
 
     {
       method: "GET",
-      path: "/dorms/{id}",
+      path: "/schools/{id}",
       config: {
-        description: "Retrieve all dorms within a particular school"
+        description: "Retrieve the a school by ID",
       },
-      handler: (request, h) => {
-        return Dorm.query().where("school_id", request.params.id)
-      }
+      handler: (request) => {
+        return School.query().where("school_id", request.params.id).first();
+      },
+    },
+
+    {
+      method: "GET",
+      path: "/schools/{id}/dorms",
+      config: {
+        description: "Retrieve all dorms for a school",
+      },
+      handler: (request) => {
+        return Dorm.query().where("school_id", request.params.id);
+      },
     },
 
     {
@@ -188,32 +183,31 @@ async function init() {
       },
       handler: async (request, h) => {
         const account = await Account.query()
-            .where("email", request.payload.email)
-            .first();
+          .where("email", request.payload.email)
+          .first();
         if (
-            account &&
-            (await account.verifyPassword(request.payload.oldPassword))
+          account &&
+          (await account.verifyPassword(request.payload.oldPassword))
         ) {
-            if( request.payload.newPassword === request.payload.confirmNewPassword) {
-              await account.query().patchAndFetch({
-                password: request.payload.newPassword
-              });
+          if (
+            request.payload.newPassword === request.payload.confirmNewPassword
+          ) {
+            await account.query().patchAndFetch({
+              password: request.payload.newPassword,
+            });
 
-              return {
-                ok: true,
-                msge: `Reset password successfully, user '${request.payload.email}'`,
-              }
-            }
+            return {
+              ok: true,
+              msge: `Reset password successfully, user '${request.payload.email}'`,
+            };
+          }
         } else {
           return {
             ok: false,
             msge: "Invalid email or password",
-
           };
         }
-
-
-      }
+      },
     },
 
     {
