@@ -17,7 +17,7 @@ objection.Model.knex(knex);
 const Account = require("./models/Account");
 const School = require("./models/school");
 const Dorm = require("./models/dorm");
-const Design_Plans = require("./models/design_plans");
+const DesignPlan = require("./models/design_plans");
 const Furniture = require("./models/furniture");
 const Room = require("./models/room");
 
@@ -145,16 +145,15 @@ async function init() {
 
     {
       method: "POST",
+
       path: "/design-plan",
       config: {
-        description: "Insert a new design plan."
+        description: "Insert a new design plan.",
       },
-      handler: (request, h) => {
-
-        let thing = Design_Plans.query()
-            .insert(request.payload);
+      handler: (request) => {
+        let thing = DesignPlan.query().insert(request.payload);
         return thing;
-      }
+      },
     },
 
     {
