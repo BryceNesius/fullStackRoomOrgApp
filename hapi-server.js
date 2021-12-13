@@ -144,6 +144,20 @@ async function init() {
     },
 
     {
+      method: "POST",
+      path: "/create-design",
+      config: {
+        description: "Insert a new row with a new design plan."
+      },
+      handler: (request, h) => {
+
+        let thing = Design_Plans.query()
+            .insert(request.payload);
+        return thing;
+      }
+    },
+
+    {
       method: "DELETE",
       path: "/accounts/{id}",
       config: {

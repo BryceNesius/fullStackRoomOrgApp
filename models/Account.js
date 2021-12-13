@@ -8,6 +8,19 @@ class Account extends Model {
     return "account";
   }
 
+  static get relationMapping() {
+    return {
+      user: {
+        relation: Model.HasManyRelation,
+        modelClass: require("./design_plans"),
+        join: {
+          from: "design_plan.user_id",
+          to: "account.id"
+        }
+      }
+    }
+  }
+
   // Encrypt the password before storing it in the database.
   // SHOULD ALSO DO THIS ON UPDATE!
 

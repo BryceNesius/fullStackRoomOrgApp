@@ -2,6 +2,8 @@
   <v-container>
     <h4>Create a new design</h4>
     <v-form v-model="valid">
+
+
       <v-text-field
         label="Plan Name"
         v-model="newDesign.name"
@@ -75,10 +77,12 @@ export default {
       this.planCreated = false;
 
       this.$axios.post("/create-design", {
+        first_name: this.$store.state.currentAccount.firstName,
+        last_name: this.$store.state.currentAccount.lastName,
         name: this.newDesign.name,
         description: this.newDesign.description,
-        school: this.newDesign.school,
-        dorm: this.newDesign.dorm,
+        school: this.newDesign.selectedSchool,
+        dorm: this.newDesign.selectedDorm,
       });
     },
 

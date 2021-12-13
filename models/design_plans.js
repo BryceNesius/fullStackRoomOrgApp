@@ -1,6 +1,7 @@
 const pg = require('pg');
 const objection = require('objection');
 const Model = objection.Model;
+const { Account } = require('./Account');
 
 class Design_plan extends Model {
     static get tableName() {
@@ -11,19 +12,15 @@ class Design_plan extends Model {
     static get relationMappings() {
         return {
             ownership: {
-                relation: Model.ManyToManyRelation,
-                modelClass: require('./user'),
+                relation: Model.BelongsToOneRelation,
+                modelClass: Account,
                 join: {
-                    from: 'design_plan.plan_id',
-                    through: {
-                        from: 'ownership.user_id',
-                        to: 'ownership.plan_id'
-                    },
-                    to: 'user.user_id'
+                    from: 'Account.id',
+                    to: 'design_plan.user_id'
                 },
             }
         };
     }
 }
 
-module.exports = {Design_plan};
+module.exports = Design_plan;
