@@ -1,26 +1,27 @@
-const pg = require('pg');
-const objection = require('objection');
-const Model = objection.Model;
-const { Account } = require('./Account');
+const { Model } = require("objection");
+const { Account } = require("./Account");
 
-class Design_plan extends Model {
-    static get tableName() {
-        return 'design_plan';
-    }
+class DesignPlan extends Model {
+  static get tableName() {
+    return "design_plans";
+  }
 
+  static get idColumn() {
+    return 'plan_id';
+  }
 
-    static get relationMappings() {
-        return {
-            ownership: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: Account,
-                join: {
-                    from: 'Account.id',
-                    to: 'design_plan.user_id'
-                },
-            }
-        };
-    }
+  static get relationMappings() {
+    return {
+      ownership: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Account,
+        join: {
+          from: "Account.id",
+          to: "design_plan.user_id",
+        },
+      },
+    };
+  }
 }
 
-module.exports = Design_plan;
+module.exports = DesignPlan;

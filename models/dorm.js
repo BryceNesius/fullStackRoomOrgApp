@@ -1,16 +1,17 @@
 const { Model } = require("objection");
-const { school } = require("./school.js");
+const { School } = require("./school.js");
 const { room_furniture } = require("./room_furniture.js");
 
 class Dorm extends Model {
   static get tableName() {
     return "dorm";
   }
+
   static get relationMappings() {
     return {
       school: {
         relation: Model.BelongsToOneRelation,
-        modelClass: school,
+        modelClass: School,
         join: {
           from: "dorm.school_id",
           to: "school.school_id",
