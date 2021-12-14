@@ -23,6 +23,10 @@
       Create Design
     </v-btn>
 
+    <v-btn v-if="isLoggedIn" text v-bind:to="{ name: 'myPlans' }">
+      My Plans
+    </v-btn>
+
 
     <v-menu v-if="isLoggedIn" offset-y>
       <template v-slot:activator="{ on }">

@@ -101,6 +101,19 @@ async function init() {
 
     {
       method: "GET",
+      path: "/myPlan{id}",
+      config: {
+        description: "Retrieve all plans for a user."
+      },
+      handler: (request, h) => {
+        return DesignPlan.query()
+            .select("dorm", "name", "description")
+            .where("last_name", request.params.id);
+      }
+    },
+
+    {
+      method: "GET",
       path: "/accounts",
       config: {
         description: "Retrieve all accounts",
