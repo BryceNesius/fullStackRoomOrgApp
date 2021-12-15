@@ -22,7 +22,7 @@ export default {
         value: 'name',
         },
         { text: 'Description', value: 'description' },
-        { text: 'Dorm', value: 'dorm' },
+        { int: 'Dorm', value: 'dorm' },
         ],
 
       plans: [],
@@ -34,7 +34,7 @@ export default {
 
   methods: {
     getPlans: function () {
-      this.$axios.get("/myPlans", { params: {id: this.$store.state.currentAccount.lastName}})
+      this.$axios.get(`/myPlans/${this.$store.state.currentAccount.lastName}`)
       .then((response) => {
         this.plans = response.data;
       });

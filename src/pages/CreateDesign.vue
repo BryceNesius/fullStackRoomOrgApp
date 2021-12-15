@@ -90,7 +90,6 @@ export default {
         .get("/schools")
         .then((response) => {
           this.schools = response.data;
-          console.log(response.data);
         })
         .catch((err) => this.showDialog("Error", err));
     },

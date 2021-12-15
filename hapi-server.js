@@ -101,7 +101,7 @@ async function init() {
 
     {
       method: "GET",
-      path: "/myPlan{id}",
+      path: "/myPlans/{id}",
       config: {
         description: "Retrieve all plans for a user."
       },
@@ -109,6 +109,7 @@ async function init() {
         return DesignPlan.query()
             .select("dorm", "name", "description")
             .where("last_name", request.params.id);
+
       }
     },
 
