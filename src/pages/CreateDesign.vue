@@ -85,6 +85,7 @@ export default {
       })
       .then((result) => {
         if (result.status === 200) {
+          this.planCreated = true;
           this.$router.push({ name: "myPlans" });
         }
       })
