@@ -82,8 +82,14 @@ export default {
         name: this.newDesign.name,
         description: this.newDesign.description,
         dorm: this.newDesign.selectedDorm,
-      });
-    },
+      })
+      .then((result) => {
+        if (result.status === 200) {
+          this.$router.push({ name: "myPlans" });
+        }
+      })
+      .catch((err) => this.showDialog("Failed", err));
+    }, // end of handle submit
 
     getSchools: function () {
       this.$axios
