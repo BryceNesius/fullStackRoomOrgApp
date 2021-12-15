@@ -22,7 +22,7 @@ export default {
         value: 'name',
         },
         { text: 'Description', value: 'description' },
-        { int: 'Dorm', value: 'dorm' },
+        { text: 'Dorm', value: 'dorm' },
         ],
 
       plans: [],
@@ -34,11 +34,11 @@ export default {
 
   methods: {
     getPlans: function () {
-      this.$axios.get(`/myPlans/${this.$store.state.currentAccount.lastName}`)
+      this.$axios.get(`/myPlans/${this.$store.state.currentAccount.lastName}/user`)
       .then((response) => {
         this.plans = response.data;
       });
-    }
+    },
   }
 }
 </script>

@@ -101,7 +101,7 @@ async function init() {
 
     {
       method: "GET",
-      path: "/myPlans/{id}",
+      path: "/myPlans/{id}/user",
       config: {
         description: "Retrieve all plans for a user."
       },
